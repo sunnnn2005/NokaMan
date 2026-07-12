@@ -48,5 +48,11 @@ def evaluate_demo(language: str) -> dict:
     model = ToyAbilityModel(language=code)
     multi = model.score_multi_skill(text)
     multi["demo_text"] = text
-    multi["language_name"] = get_language_meta(code)["name"]
+    meta = get_language_meta(code)
+    multi["language_name"] = meta["name"]
+    multi["frameworks"] = meta["frameworks"]
+    # Attach framework band labels from overall writing-style score
+    writing = model.score_text(text, skill="writing")
+    multi["framework_bands"] = writing.get("framework_bands") or {}
+    multi["cefr"] = writing.get("cefr") or multi.get("cefr")
     return multi
