@@ -1,0 +1,7 @@
+{
+  "id": "en_writing_c1",
+  "language": "en",
+  "skill": "writing",
+  "expected_cefr": "C1",
+  "text": "Having spent the last year leading a distributed engineering team, I have become more deliberate about how we frame trade-offs. Shipping quickly still matters, but only when the resulting system remains operable under real load. In practice that means writing design notes that future teammates can challenge, measuring the cost of complexity, and refusing silent failures. The discipline is not glamorous; it is simply how durable products earn trust."
+}
