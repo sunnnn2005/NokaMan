@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 from pathlib import Path
 
 import typer
@@ -7,13 +8,15 @@ from rich.console import Console
 from rich.table import Table
 
 from nokaman import __version__
+from nokaman.config import OUT_DIR, RUNS_DIR
 from nokaman.data.loader import list_sample_files, list_rubric_files, load_rubric
+from nokaman.eval.metrics import batch_evaluate, placement_test
 from nokaman.eval.pipeline import evaluate_demo, evaluate_sample_file, evaluate_text
 from nokaman.rubrics.registry import SUPPORTED_LANGUAGES, get_language_meta
 from nokaman.train.toy_train import train_toy
 
 app = typer.Typer(
-    help="NokaMan — multi-language learning ability assessment.",
+    help="NokaMan — multi-language learning ability assessment (runnable).",
     no_args_is_help=True,
 )
 lang_app = typer.Typer(help="Supported languages")
@@ -31,6 +34,17 @@ console = Console()
 def version_cmd() -> None:
     console.print(f"NokaMan {__version__}")
     console.print(f"Languages: {', '.join(sorted(SUPPORTED_LANGUAGES))}")
+
+
+@app.command("demo")
+def demo_cmd(lang: str = typer.Option("en", "--lang", "-l")) -> None:
+    """Full multi-skill demo for a language (end-to-end runnable)."""
+    result = evaluate_demo(lang)
+    console.print_json(data=result)
+    OUT_DIR.mkdir(parents=True, exist_ok=True)
+    path = OUT_DIR / f"demo_{lang}.json"
+    path.write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
+    console.print(f"[dim]saved[/dim] {path}")
 
 
 @lang_app.command("list")
@@ -107,6 +121,30 @@ def eval_samples() -> None:
             str(result.get("score")),
         )
     console.print(table)
+
+
+@eval_app.command("batch")
+def eval_batch(
+    out: Path | None = typer.Option(None, "--out", "-o"),
+) -> None:
+    report = batch_evaluate()
+    out_path = out or (RUNS_DIR / "batch_eval.json")
+    RUNS_DIR.mkdir(parents=True, exist_ok=True)
+    out_path.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
+    console.print(
+        f"[green]batch[/green] n={report['n_samples']} exact={report['exact_cefr_hit_rate']} "
+        f"adjacent={report['adjacent_cefr_hit_rate']}"
+    )
+    console.print(f"Report: {out_path}")
+
+
+@eval_app.command("placement")
+def eval_placement(
+    lang: str = typer.Option("en", "--lang", "-l"),
+    answer: list[str] = typer.Option(..., "--answer", "-a", help="Repeat for multiple answers"),
+) -> None:
+    result = placement_test(lang, answer)
+    console.print_json(data=result)
 
 
 @train_app.command("toy")

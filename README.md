@@ -31,25 +31,17 @@ pip install -e ".[dev]"
 nokaman --help
 ```
 
-## Commands
+## Commands (runnable)
 
 ```bash
 nokaman version
+nokaman demo --lang en                 # multi-skill report + save JSON
 nokaman languages list
-nokaman rubrics list --lang en
-
-# Evaluate a learner writing sample
 nokaman eval text --lang en --file data/samples/en_writing_b1.json
-
-# Evaluate free text from stdin flags
 nokaman eval text --lang ko --text "안녕하세요. 저는 학생입니다."
-
-# Full multi-skill demo report
-nokaman eval demo --lang ja
-
-# Train toy calibrator on bundled samples
+nokaman eval batch --out data/runs/batch_eval.json
+nokaman eval placement --lang en -a "I study every day." -a "Hello!"
 nokaman train toy --epochs 3
-nokaman train report
 ```
 
 ## Layout
