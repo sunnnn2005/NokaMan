@@ -1,0 +1,7 @@
+{
+  "id": "en_writing_c2",
+  "language": "en",
+  "skill": "writing",
+  "expected_cefr": "C2",
+  "text": "Were one to dissect the rhetoric of continuous delivery, one might conclude that velocity without verifiability is merely accelerated risk. I contend that mature teams treat observability budgets as constitutive of product quality—instrumentation, SLO review, and failure injection are not ornamental but epistemic. Consequently, prose that enumerates trade-offs with quantified confidence intervals does more for onboarding than aspirational slogans, provided reviewers insist on falsifiable claims rather than performative certainty."
+}
