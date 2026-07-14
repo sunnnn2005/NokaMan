@@ -124,6 +124,7 @@ nokaman-gui
 | `nokaman rubrics list [-l en]` | Skill rubrics |
 | `nokaman rubrics explain -l en` | Print rubric skill weights, notes, frameworks, and bands |
 | `nokaman eval text …` | Evaluate free text |
+| `nokaman eval batch --out data/out/batch.json` | Score every sample and write a JSON CEFR hit-rate report |
 | `nokaman train …` | Toy calibration |
 | `nokaman gui` / `nokaman-gui` | **Qt desktop app** (needs `.[gui]`) |
 | `nokaman serve` | Optional FastAPI |
@@ -131,6 +132,7 @@ nokaman-gui
 ```powershell
 nokaman demo -l vi
 nokaman demo -l ko
+nokaman eval batch --out data/out/batch.json
 nokaman-gui
 ```
 

@@ -235,7 +235,7 @@ def eval_batch(
 ) -> None:
     report = batch_evaluate()
     out_path = out or (RUNS_DIR / "batch_eval.json")
-    RUNS_DIR.mkdir(parents=True, exist_ok=True)
+    out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
     console.print(
         f"[green]batch[/green] n={report['n_samples']} exact={report['exact_cefr_hit_rate']} "
