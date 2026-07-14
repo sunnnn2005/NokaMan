@@ -13,6 +13,7 @@ SUPPORTED_LANGUAGES: dict[str, dict] = {
     "es": {"name": "Spanish", "frameworks": ["CEFR", "DELE"]},
     "fr": {"name": "French", "frameworks": ["CEFR", "DELF"]},
     "de": {"name": "German", "frameworks": ["CEFR", "Goethe"]},
+    "pt": {"name": "Portuguese", "frameworks": ["CEFR", "CAPLE"]},
 }
 
 SKILLS = ("vocabulary", "grammar", "reading", "writing", "listening", "speaking")
